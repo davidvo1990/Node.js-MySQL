@@ -103,7 +103,8 @@ function buying() {
       if (answer.unit_quatity <= res[0].stock_quantity) {
         connection.query("UPDATE products SET ? WHERE ?",
           [{
-            stock_quantity: res[0].stock_quantity - answer.unit_quatity
+            stock_quantity: res[0].stock_quantity - answer.unit_quatity,
+            product_sales: res[0].product_sales + res[0].price * answer.unit_quatity
           },
           {
             item_id: answer.item_id

@@ -257,8 +257,6 @@ function addNewProduct() {
                 console.log("------------------------------------------------------");
                 console.log("Your item was added successfully!");
                 console.log(
-                    "ID: " +
-                    answer.item_id +
                     " Product: " +
                     answer.product_name +
                     " || Department: " +

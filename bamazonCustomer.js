@@ -4,6 +4,7 @@
 
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const chalk = require('chalk');
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -32,7 +33,7 @@ function readProducts() {
     // console.log(res);
 
     for (var i = 0; i < res.length; i++) {
-      console.log(
+      console.log(chalk.blue(
         "ID: " +
         res[i].item_id +
         " Product: " +
@@ -43,7 +44,7 @@ function readProducts() {
         res[i].price +
         " || Stock: " +
         res[i].stock_quantity
-      );
+      ));
     }
     console.log("------------------------------------------------------");
     buying();
@@ -98,7 +99,7 @@ function buying() {
     connection.query(query, { item_id: answer.item_id }, function (err, res) {
       if (err) throw err;
 
-      console.log("You had purchase " + answer.unit_quatity + " " + res[0].product_name + ".")
+      console.log(chalk.green("You had purchase " + answer.unit_quatity + " " + res[0].product_name + "."));
       //if quality had purchase less than the stock, purchase sucessfull
       if (answer.unit_quatity <= res[0].stock_quantity) {
         connection.query("UPDATE products SET ? WHERE ?",
@@ -113,21 +114,21 @@ function buying() {
           function (err, data) {
             if (err) throw err;
             console.log("------------------------------------------------------");
-            console.log("Thank you for purchased " + answer.unit_quatity + " " + res[0].product_name + "!")
-            console.log("Your Total is $" + res[0].price * answer.unit_quatity)
+            console.log(chalk.yellow("Thank you for purchased " + answer.unit_quatity + " " + res[0].product_name + "!"));
+            console.log(chalk.yellow("Your Total is $" + res[0].price * answer.unit_quatity));
             console.log("------------------------------------------------------");
           })
       } else {
         console.log("------------------------------------------------------");
-        console.log("Insufficient quantity!")
-        console.log("Sorry, we do not have enough stock of " + res[0].product_name + " to complete the purchase!")
+        console.log(chalk.yellow("Insufficient quantity!"));
+        console.log(chalk.yellow("Sorry, we do not have enough stock of " + res[0].product_name + " to complete the purchase!"));
         console.log("------------------------------------------------------");
       }
 
       connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
-          console.log(
+          console.log(chalk.magenta(
             "ID: " +
             res[i].item_id +
             " Product: " +
@@ -138,7 +139,7 @@ function buying() {
             res[i].price +
             " || Stock: " +
             res[i].stock_quantity
-          );
+          ));
         }
         })
 

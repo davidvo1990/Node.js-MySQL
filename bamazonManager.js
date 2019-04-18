@@ -8,6 +8,8 @@
 // * Add New Product
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const chalk = require('chalk');
+
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -76,7 +78,7 @@ function viewSale() {
         // console.log(res);
 
         for (var i = 0; i < res.length; i++) {
-            console.log(
+            console.log(chalk.blue(
                 "ID: " +
                 res[i].item_id +
                 " Product: " +
@@ -87,7 +89,7 @@ function viewSale() {
                 res[i].price +
                 " || Stock: " +
                 res[i].stock_quantity
-            );
+            ));
         }
         console.log("------------------------------------------------------");
         menuManager();
@@ -101,7 +103,7 @@ function viewLowInv() {
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, res) {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
-            console.log(
+            console.log(chalk.green(
                 "ID: " +
                 res[i].item_id +
                 " Product: " +
@@ -112,7 +114,7 @@ function viewLowInv() {
                 res[i].price +
                 " || Stock: " +
                 res[i].stock_quantity
-            );
+            ));
         }
         console.log("------------------------------------------------------");
         menuManager();
@@ -128,7 +130,7 @@ function addToInv() {
         console.log("------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
 
-            console.log(
+            console.log(chalk.yellow(
                 "ID: " +
                 res[i].item_id +
                 " Product: " +
@@ -139,11 +141,11 @@ function addToInv() {
                 res[i].price +
                 " || Stock: " +
                 res[i].stock_quantity
-            );
+            ));
 
         }
         console.log("------------------------------------------------------");
-        console.log("Please input:")
+        console.log(chalk.blue("Please input:"))
         inquirer.prompt([
             {
                 type: "input",
@@ -180,11 +182,11 @@ function addToInv() {
                 ], function (err, data) {
                     if (err) throw err;
                     console.log("------------------------------------------------------");
-                    console.log("Sucessfully add " + answer.add_quatity + " to " + res[0].product_name + " stock.")
-                    console.log("Total inventory: " + (parseInt(res[0].stock_quantity) + parseInt(answer.add_quatity)))
+                    console.log(chalk.magenta("Sucessfully add " + answer.add_quatity + " to " + res[0].product_name + " stock."))
+                    console.log(chalk.magenta("Total inventory: " + (parseInt(res[0].stock_quantity) + parseInt(answer.add_quatity))))
                     console.log("------------------------------------------------------");
 
-                    console.log("Update Inventory:")
+                    console.log(chalk.yellow("Update Inventory:"))
                 })
             printDB();
             console.log("------------------------------------------------------");
@@ -255,8 +257,8 @@ function addNewProduct() {
             function (err) {
                 if (err) throw err;
                 console.log("------------------------------------------------------");
-                console.log("Your item was added successfully!");
-                console.log(
+                console.log(chalk.cyan("Your item was added successfully!"));
+                console.log(chalk.red(
                     " Product: " +
                     answer.product_name +
                     " || Department: " +
@@ -265,7 +267,7 @@ function addNewProduct() {
                     answer.price +
                     " || Stock: " +
                     answer.stock_quantity
-                );
+                ));
                 console.log("------------------------------------------------------");
                 menuManager();
             }
@@ -284,7 +286,7 @@ function printDB() {
         if (err) throw err;
         console.log("------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
-            console.log(
+            console.log(chalk.red(
                 "ID: " +
                 res[i].item_id +
                 " Product: " +
@@ -295,7 +297,7 @@ function printDB() {
                 res[i].price +
                 " || Stock: " +
                 res[i].stock_quantity
-            );
+            ));
         }
         console.log("------------------------------------------------------");
     })

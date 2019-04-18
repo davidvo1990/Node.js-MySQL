@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 const cTable = require('console.table');
+const chalk = require('chalk');
 
 
 var connection = mysql.createConnection({
@@ -72,6 +73,7 @@ function viewSaleByDept() {
         }
         // console.log(arr)
         //log out the table
+        
         console.table(
             arr
         );
@@ -117,7 +119,7 @@ function creatNewDept() {
             function (err) {
                 if (err) throw err;
                 console.log("------------------------------------------------------");
-                console.log("New department created successfully!");
+                console.log(chalk.red("New department created successfully!"));
                 console.log("------------------------------------------------------");
                 connection.query("SELECT * FROM departments", function (err, res) {
                     if (err) throw err;
@@ -139,6 +141,7 @@ function creatNewDept() {
                     }
                     // console.log(arr)
                     //log out the table
+                    
                     console.table(
                         arr
                     );

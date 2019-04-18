@@ -115,7 +115,7 @@ function buying() {
             if (err) throw err;
             console.log("------------------------------------------------------");
             console.log(chalk.yellow("Thank you for purchased " + answer.unit_quatity + " " + res[0].product_name + "!"));
-            console.log(chalk.yellow("Your Total is $" + res[0].price * answer.unit_quatity));
+            console.log(chalk.yellow("Your Total is $" + (res[0].price * answer.unit_quatity).toFixed(2)));
             console.log("------------------------------------------------------");
           })
       } else {
